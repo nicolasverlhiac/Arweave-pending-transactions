@@ -1,0 +1,32 @@
+{
+  "name": "Arweave-pending-transaction",
+  "version": "0.1.1",
+  "author": "Nicolas Verlhiac (https://ownbase.org)",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "echarts": "^5.2.0",
+    "vite-plugin-singlefile": "^0.5.1",
+    "vue": "^3.2.9",
+    "vue-echarts": "^6.0.0",
+    "vue-router": "^4.0.11",
+    "vue3-popper": "^1.4.0"
+  },
+  "devDependencies": {
+    "@headlessui/vue": "^1.4.1",
+    "@heroicons/vue": "^1.0.4",
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/line-clamp": "^0.2.1",
+    "@tailwindcss/typography": "^0.4.1",
+    "@types/tailwindcss": "^2.2.1",
+    "@vitejs/plugin-vue": "^1.6.1",
+    "@vue/compiler-sfc": "^3.2.9",
+    "autoprefixer": "^10.3.4",
+    "tailwindcss": "^2.2.10",
+    "vite": "^2.5.3"
+  }
+}
