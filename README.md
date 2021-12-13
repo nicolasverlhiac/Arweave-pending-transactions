@@ -1,5 +1,7 @@
 # `Arweave - pending transactions`
 
+![This is an image](assets/arweave-pending-demo.gif)
+
 Display pending transactions on the arweave network.
 
 __⚠️ : Be carreful, this an experimental project still needs debugging, tweaking, and refactoring.__
