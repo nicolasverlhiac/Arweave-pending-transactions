@@ -6,7 +6,6 @@ import TxStats from './components/TxStats.vue';
 import PendingTx from './components/PendingTx.vue';
 import Update from './components/Update.vue';
 import ChartPie from './components/ChartPie.vue';
-import Popper from "vue3-popper";
 
 let pendingTx = ref(0)
 let searchTx = ref("")
@@ -14,7 +13,8 @@ let chunkFee = ref(0)
 let fixedFees = ref(0)
 let arPriceUSD = ref(0)
 let chunkPriceUSD = ref(0)
-
+let isActiveChunk = ref(true)
+let isActivePrice = ref(true)
 let barData = ref([])
 let barLegend = ref([])
 let pieDistribution = ref([])
@@ -185,6 +185,14 @@ let pieDistribution = ref([])
     barLegend.value = barLegend
   }
 
+  function toggleChunk (event){
+       this.isActiveChunk = !this.isActiveChunk;
+  }
+
+  function togglePrice (event){
+       this.isActivePrice = !this.isActivePrice;
+  }
+
   
 </script>
 
@@ -205,31 +213,74 @@ let pieDistribution = ref([])
                     <PendingTx :pendingTx="pendingTx" />
 
                     <div class="flex">
-                      <div class="rounded-xl w-32 h-32 bg-black shadow-sm mt-4 p-6  mr-4">
+                      <div 
+                        class="rounded-xl min-w-32 w-32 h-32 bg-black shadow-sm mt-4 p-6 mr-4"
+                        v-bind:class="[isActivePrice ? '' : 'hidden']"
+                      >
                         <div class="leading-normal flex items-center justify-between text-white text-md uppercase"><span>AR</span> 
-                        <Popper 
-                          arrow
-                          content="USD price for 1 AR token, according to coingecko">
-                          <span class="bg-white cursor-pointer rounded-full text-xs w-4 h-4 items-center justify-center flex  text-black">?</span> 
-                        </Popper>
+                          <span 
+                          @click="togglePrice()"
+                          class="bg-white rounded-full text-xs min-w-4 w-4 min-h-4 h-4 items-center justify-center flex cursor-pointer hover:opacity-75 text-black">
+                            ?
+                          </span>
 
                         </div>
                         <div class="text-white leading-normal font-semibold text-xl mt-4">
                         ${{arPriceUSD}} 
                         </div>
                       </div>
-                      <div class="rounded-xl w-full h-32 bg-gray-800 shadow-sm mt-4 p-6">
+
+                      <div 
+                        class="rounded-xl min-w-32 w-32 h-32 bg-gray-900 shadow-sm mt-4 p-6 mr-4"
+                        v-bind:class="[isActivePrice ? 'hidden' : '']"
+                      >
+                        <div class="leading-normal text-white text-xs py-1">
+                          <span 
+                          @click="togglePrice()"
+                          class="bg-white rounded-full float-right text-xs min-w-4 w-4 min-h-4 h-4 items-center justify-center flex cursor-pointer hover:opacity-75 text-black">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M6.22566 4.81096C5.83514 4.42044 5.20197 4.42044 4.81145 4.81096C4.42092 5.20148 4.42092 5.83465 4.81145 6.22517L10.5862 11.9999L4.81151 17.7746C4.42098 18.1651 4.42098 18.7983 4.81151 19.1888C5.20203 19.5793 5.8352 19.5793 6.22572 19.1888L12.0004 13.4141L17.7751 19.1888C18.1656 19.5793 18.7988 19.5793 19.1893 19.1888C19.5798 18.7983 19.5798 18.1651 19.1893 17.7746L13.4146 11.9999L19.1893 6.22517C19.5799 5.83465 19.5799 5.20148 19.1893 4.81096C18.7988 4.42044 18.1657 4.42044 17.7751 4.81096L12.0004 10.5857L6.22566 4.81096Z" fill="black"/>
+                            </svg>
+
+                          </span>
+                          USD price for 1 AR token (Coingecko).
+                        </div>
+                      </div>
+                      
+                      <div 
+                        class="rounded-xl w-full h-32 bg-gray-800 shadow-sm mt-4 p-6"
+                        v-bind:class="[isActiveChunk ? '' : 'hidden']"
+                      >
                         <div class="leading-normal flex items-center justify-between text-white text-md"><span>Data Chunk </span> 
-                        <Popper 
-                          arrow
-                          content="A chunk of data is 256*1024 bytes. It's the minium size of data transaction on arweave network. This does not include the initial costs of a transaction which are very low. You can multiply this price by the number of 256 KB chunks needed to store your data.">
-                          <span class="bg-white rounded-full text-xs min-w-4 w-4 min-h-4 h-4 items-center justify-center flex text-black">?</span>
-                        </Popper>
+                          <!-- content="A chunk of data is 256*1024 bytes. It's the minium size of data transaction on arweave network. This does not include the initial costs of a transaction which are very low. You can multiply this price by the number of 256 KB chunks needed to store your data."> -->
+                          <span 
+                          @click="toggleChunk()"
+                          class="bg-white rounded-full text-xs min-w-4 w-4 min-h-4 h-4 items-center justify-center flex cursor-pointer hover:opacity-75 text-black">
+                            ?
+                          </span>
                         </div>
                         <div class="text-white leading-normal font-semibold text-xl mt-4">
                         ${{chunkPriceUSD}} 
                         </div>
                       </div>
+
+                      <div 
+                      class="rounded-xl w-full h-32 bg-gray-900 shadow-sm mt-4 p-6"
+                      v-bind:class="[isActiveChunk ? 'hidden' : '']"
+                      >
+                        <div class="leading-normal text-white text-xs py-1">
+                          <span 
+                          @click="toggleChunk()"
+                          class="bg-white rounded-full float-right text-xs min-w-4 w-4 min-h-4 h-4 items-center justify-center flex cursor-pointer hover:opacity-75 text-black">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M6.22566 4.81096C5.83514 4.42044 5.20197 4.42044 4.81145 4.81096C4.42092 5.20148 4.42092 5.83465 4.81145 6.22517L10.5862 11.9999L4.81151 17.7746C4.42098 18.1651 4.42098 18.7983 4.81151 19.1888C5.20203 19.5793 5.8352 19.5793 6.22572 19.1888L12.0004 13.4141L17.7751 19.1888C18.1656 19.5793 18.7988 19.5793 19.1893 19.1888C19.5798 18.7983 19.5798 18.1651 19.1893 17.7746L13.4146 11.9999L19.1893 6.22517C19.5799 5.83465 19.5799 5.20148 19.1893 4.81096C18.7988 4.42044 18.1657 4.42044 17.7751 4.81096L12.0004 10.5857L6.22566 4.81096Z" fill="black"/>
+                            </svg>
+
+                          </span>
+                          A chunk of data is 256*1024 bytes. It's the minium size of data transaction on arweave network.
+                        </div>
+                      </div>
+                      
                     </div>
                     
                   </div>
@@ -274,22 +325,9 @@ let pieDistribution = ref([])
 </template>
 
 <style scoped>
-  :deep(.popper) {
-    background: #6B7280;
-    padding: 10px;
-    border-radius: 0.75rem;
-    box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-    color: #fff;
-    font-size: 12px;
-    text-transform: none;
-  }
+.min-w-32 {
+  min-width: 8rem;
+}
 
-  :deep(.popper #arrow::before) {
-    background: #6B7280;
-  }
 
-  :deep(.popper:hover),
-  :deep(.popper:hover > #arrow::before) {
-    background: #6B7280;
-  }
 </style>

@@ -9,11 +9,9 @@
   },
   "dependencies": {
     "echarts": "^5.2.0",
-    "vite-plugin-singlefile": "^0.5.1",
     "vue": "^3.2.9",
     "vue-echarts": "^6.0.0",
-    "vue-router": "^4.0.11",
-    "vue3-popper": "^1.4.0"
+    "vue-router": "^4.0.11"
   },
   "devDependencies": {
     "@headlessui/vue": "^1.4.1",
