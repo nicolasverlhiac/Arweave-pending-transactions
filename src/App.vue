@@ -37,7 +37,10 @@ let pieDistribution = ref([])
           json => {
               pendingTx.value = Object.keys(json).length;
 
-              test(JSON.stringify(json))
+              let transactions = json.slice(0,100)
+              // transactions = transactions.sort(() => Math.random() - 0.5)
+
+              test(JSON.stringify(transactions))
               
               // TODO : Search a transaction
               // json.forEach(function(item, index, array) {
