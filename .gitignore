@@ -6,3 +6,6 @@ dist-ssr
 debug.log
 .idea
 .github/dependabot.yml
+firebase.json
+.firebaserc
+.firebase
