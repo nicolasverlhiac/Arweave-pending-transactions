@@ -28,9 +28,15 @@ const props = defineProps(
   }
 )
 const { pieData } = toRefs(props);
+let chartready = ref(false);
 const option = ref()
 
-watchEffect(() => otionRefresh())
+watchEffect(() => {
+    otionRefresh()
+    if (pieData.value.length > 0) {
+        chartready.value = true
+    }
+})
 
 function otionRefresh() {
     option.value = {
@@ -106,7 +112,7 @@ function otionRefresh() {
 
 <template>
     <div class="w-full text-center bg-white shadow-lg px-6 py-4 rounded-xl">
-        <span v-if="!pieData" class="flex justify-between items-center ">
+        <span v-if="!chartready" class="flex justify-between items-center ">
             <svg class="animate-spin mx-auto h-12 w-12 text-grey-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

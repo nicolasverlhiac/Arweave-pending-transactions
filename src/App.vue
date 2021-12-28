@@ -25,7 +25,7 @@ let pieDistribution = ref([])
 
   setInterval(() => {
       getPending();
-  }, 10000)
+  }, 5000)
 
   async function getPending(params) {
 
@@ -67,7 +67,7 @@ let pieDistribution = ref([])
     })
       .then(r => r.json())
       .then(data => {
-        console.log('data returned:', data.data.transactions.edges)
+        // console.log('data returned:', data.data.transactions.edges)
         // gettxs(data.data.transactions.edges)
         txDistribution(data.data.transactions.edges)
         getPriceAr()
@@ -175,7 +175,7 @@ let pieDistribution = ref([])
       if (calculPrice(item.node.data.size) > item.node.fee.winston) {
         console.error("Under price")
       } else if (calculPrice(item.node.data.size) < item.node.fee.winston) {
-        console.log("✅ price "+ evolutionPourcentage(item.node.fee.winston, calculPrice(item.node.data.size)).toFixed(1) + "%")
+        // console.log("✅ price "+ evolutionPourcentage(item.node.fee.winston, calculPrice(item.node.data.size)).toFixed(1) + "%")
         barData.push(evolutionPourcentage(item.node.fee.winston, calculPrice(item.node.data.size)).toFixed(2))
         barLegend.push(evolutionPourcentage(item.node.fee.winston, calculPrice(item.node.data.size)).toFixed(1) + "%")
       } else {
@@ -189,11 +189,11 @@ let pieDistribution = ref([])
   }
 
   function toggleChunk (event){
-       this.isActiveChunk = !this.isActiveChunk;
+       isActiveChunk.value = !isActiveChunk.value;
   }
 
   function togglePrice (event){
-       this.isActivePrice = !this.isActivePrice;
+       isActivePrice.value = !isActivePrice.value;
   }
 
   
