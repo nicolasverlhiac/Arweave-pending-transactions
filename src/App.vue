@@ -2,21 +2,19 @@
 import { ref } from 'vue'
 import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
-import TxStats from './components/TxStats.vue';
 import PendingTx from './components/PendingTx.vue';
 import Update from './components/Update.vue';
 import ChartPie from './components/ChartPie.vue';
+import SearchTx from './components/SearchTx.vue';
 
 let pendingTx = ref(0)
-let searchTx = ref("")
+let pendingTxData = ref([])
 let chunkFee = ref(0)
 let fixedFees = ref(0)
 let arPriceUSD = ref(0)
 let chunkPriceUSD = ref(0)
 let isActiveChunk = ref(true)
 let isActivePrice = ref(true)
-let barData = ref([])
-let barLegend = ref([])
 let pieDistribution = ref([])
 
   getPrice();
@@ -36,19 +34,13 @@ let pieDistribution = ref([])
       .then(
           json => {
               pendingTx.value = Object.keys(json).length;
+              pendingTxData.value = json
 
               let transactions = json.slice(0,100)
               // transactions = transactions.sort(() => Math.random() - 0.5)
 
               test(JSON.stringify(transactions))
-              
-              // TODO : Search a transaction
-              // json.forEach(function(item, index, array) {
-              //   if (item == searchTx.value) {
-              //     console.log(item, index);
-              //   }
-              
-              // });
+
           }
       )
   }
@@ -204,12 +196,14 @@ let pieDistribution = ref([])
     <Navbar></Navbar>
     <main>
       <section>
-        <div class="container mx-auto px-4 mt-10 md:mt-40">
+        <div class="container mx-auto px-4 mt-10 md:mt-10">
           <div class="flex content-center justify-center h-full">
             <div class="w-full h-auto lg:w-8/12 px-4">
               <div class="relative grid grid-cols-1 mb-6">
 
                 <Update />
+
+                <SearchTx :pendingTxs="pendingTxData" />
 
                 <div class="grid grid-cols-4 grid-flow-row gap-4 mb-10">
                   <div class="col-span-4 md:col-span-2">
@@ -294,29 +288,6 @@ let pieDistribution = ref([])
 
                 </div>
 
-                <!-- <TxStats :data="barData" :legend="barLegend"></TxStats> -->
-
-
-                <!-- <div class="rounded-xl w-full col-span-2 bg-white shadow-sm">
-                    
-                    <div class="text-white text-4xl font-semibold leading-normal py-8 px-6">
-                      
-                    </div>
-
-                    <div class="bg-gray-200 rounded-b-xl text-gray-500 text-xs uppercase leading-normal py-4 px-6">
-                        Pending Transactions
-                    </div>
-
-                </div>
-
-                <div class="rounded-t mb-0 px-6 py-12">
-                  <div class="text-center">
-
-                    <p class="py-2">
-                      <input v-model="searchTx" type="text" placeholder="" class="w-full rounded-2xl focus:ring-gray-900 focus:border-gray-900"/>
-                    </p>
-                  </div>
-                </div> -->
               </div>
             </div>
           </div>
