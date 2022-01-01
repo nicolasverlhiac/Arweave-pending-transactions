@@ -5,6 +5,7 @@ let searchedTx = ref("")
 let searchedTxIsInError = ref(0)
 let isSearching = ref(0)
 let transaction = ref()
+let refreshSerachResult = ref("")
 let ARUSD = ref(0)
 
 
@@ -30,6 +31,10 @@ function searchTx({target}) {
     if(searchInput.length == 43) {
         searchedTx.value = searchInput
         findTx(searchInput)
+
+        if (!refreshSerachResult.value) {
+            refreshSerachResult.value = setInterval(findTx, 10000, searchInput)
+        }
     } else if (searchInput.length == 0) {
         searchedTxIsInError.value = 0
         isSearching.value = 0
@@ -40,7 +45,7 @@ function searchTx({target}) {
 }
 
 async function findTx(tx) {
-
+    
     fetch('https://arweave.net/graphql', {
         method: 'POST',
         headers: {
@@ -52,8 +57,13 @@ async function findTx(tx) {
         })
       .then(r => r.json())
       .then(data => {
-        transaction.value = data.data.transaction
-        isSearching.value = 0
+
+            transaction.value = data.data.transaction
+            isSearching.value = 0
+
+            if (data.data.transaction.block) {
+                clearInterval(refreshSerachResult.value)
+            }
         })
       .catch(e => {
             console.log("Error GraphQl: " + e)
