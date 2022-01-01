@@ -32,6 +32,7 @@ function searchTx({target}) {
         findTx(searchInput)
     } else if (searchInput.length == 0) {
         searchedTxIsInError.value = 0
+        isSearching.value = 0
     } else {
         searchedTxIsInError.value = 1
         isSearching.value = 0
