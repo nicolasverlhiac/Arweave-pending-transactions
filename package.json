@@ -1,6 +1,6 @@
 {
   "name": "Arweave-pending-transaction",
-  "version": "0.1.1",
+  "version": "0.6.1",
   "author": "Nicolas Verlhiac (https://ownbase.org)",
   "scripts": {
     "dev": "vite --host",

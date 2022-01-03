@@ -12,7 +12,9 @@ export default defineConfig({
   server: {
     open: true,
   },
+  base: "", // Remove slash for arkb deploy on arweave
   build: {
     chunkSizeWarningLimit:1500,
+    assetsDir: "assets"
   }
 })
