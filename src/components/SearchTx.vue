@@ -28,13 +28,13 @@ function searchTx({target}) {
     searchedTxIsInError.value = 0
     transaction.value = ""
 
+    clearInterval(refreshSerachResult.value)
+
     if(searchInput.length == 43) {
         searchedTx.value = searchInput
         findTx(searchInput)
 
-        if (!refreshSerachResult.value) {
-            refreshSerachResult.value = setInterval(findTx, 10000, searchInput)
-        }
+        refreshSerachResult.value = setInterval(findTx, 10000, searchInput)
     } else if (searchInput.length == 0) {
         searchedTxIsInError.value = 0
         isSearching.value = 0
@@ -124,7 +124,7 @@ function formatBytes(bytes, decimals = 2) {
 </script>
 
 <template>
-    <div class="rounded-t mb-0 pb-6 md:py-10">
+    <div class="rounded-t col-span-4 mb-0 pb-6 md:py-10">
 
 
             
